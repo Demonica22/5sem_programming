@@ -1,6 +1,7 @@
 import urllib.parse
 import logging
 from api import WikiApi
+import webbrowser
 
 class Runner:
     def __init__(self):
@@ -8,7 +9,13 @@ class Runner:
 
     def run(self):
         user_input = self.get_user_input()
-        encoded_user_input = self.encode_user_input(user_input)
+        self.wiki_api.get_wiki(user_input)
+        print("Выберите нужный вариант")
+        self.wiki_api.print_results()
+
+        user_input = input("Введите число: \n")
+        if 0 < int(user_input) <= len(self.wiki_api.response_data.keys()):
+            webbrowser.open(self.wiki_api.get_result_url(int(user_input)))
 
     def get_user_input(self) -> str:
         """
@@ -21,14 +28,8 @@ class Runner:
             return self.get_user_input()
         return user_input
 
-    def encode_user_input(self, user_input: str) -> str:
-        try:
-            encoded = urllib.parse.quote(user_input)
-        except Exception as x:
-            logging.warning(f"Error while encoding user string : {x}")
-            return ""
-        return encoded
+
 
 
 r = Runner()
-r.get_user_input()
+r.run()
