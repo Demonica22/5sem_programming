@@ -25,9 +25,10 @@ class WikiApi:
             request.raise_for_status()
 
             json_data = request.json()
-            self.response_data = {i + 1: {'page_id': elem['pageid'], 'title': urllib.parse.unquote(elem['title'])} for i, elem
-                           in
-                           enumerate(json_data['query']['search'])}
+            self.response_data = {i + 1: {'page_id': elem['pageid'], 'title': urllib.parse.unquote(elem['title'])} for
+                                  i, elem
+                                  in
+                                  enumerate(json_data['query']['search'])}
 
             return self.response_data
         except Exception as x:
@@ -35,12 +36,14 @@ class WikiApi:
             return {}
 
     def get_result_url(self, index: int) -> str:
-        id = self.response_data.get(index,{}).get('page_id')
+        id = self.response_data.get(index, {}).get('page_id')
         if not id:
             print("No such page")
-        url = requests.request(method='get',url=self.RESULT_PAGE_URL,params={'curid':id}).url
+        url = requests.request(method='get', url=self.RESULT_PAGE_URL, params={'curid': id}).url
         return url
+
     def print_results(self):
+        print("Выберите нужный вариант")
         i = 0
         for i in self.response_data:
             title = self.response_data[i]['title']
