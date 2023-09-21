@@ -1,20 +1,19 @@
-import logging
 import urllib.parse
 
 import requests
 import logging
-import json
-from pprint import pprint
 
 
 class WikiApi:
     URL = 'https://ru.wikipedia.org/w/api.php'
     RESULT_PAGE_URL = 'https://ru.wikipedia.org/w/index.php'
 
-    def __init__(self):
-        pass
-
     def get_wiki(self, user_input: str) -> dict:
+        """
+        Отправляет запрос к вики-апи с пользовательским запросом user_input
+        :param user_input:
+        :return:
+        """
         params = {"action": "query",
                   "list": "search",
                   "format": "json",
@@ -43,6 +42,9 @@ class WikiApi:
         return url
 
     def print_results(self):
+        if not self.response_data:
+            print("По вашему запросу ничего не найдено. Выход \n")
+            return False
         print("Выберите нужный вариант")
         i = 0
         for i in self.response_data:
@@ -50,3 +52,5 @@ class WikiApi:
             print(f"{i}) {title}")
         print(f"{i + 1}) Выйти")
         self.response_data[i + 1] = {'title': "Выйти"}
+
+        return True
