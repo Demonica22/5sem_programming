@@ -15,10 +15,11 @@ class Runner:
         if results:
             self.get_user_choice_input()
 
+    # Считываем пользовательский поиск
     def get_user_search_input(self) -> str:
         """
 
-        :return:
+        :return: string
         """
         user_input = input("Введите запрос, который хотите найти:\n")
         if not user_input.rstrip():
@@ -26,6 +27,7 @@ class Runner:
             return self.get_user_search_input()
         return user_input
 
+    # Считываем количество строк поиска, и открываем страницу
     def get_user_choice_input(self) -> None:
         user_input = input("Введите число: \n")
         while not user_input.isdigit():
