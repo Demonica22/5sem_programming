@@ -35,6 +35,9 @@ class Runner:
             user_input = input("Введите число: \n")
         finished = False
         while not finished:
+            while not user_input.isdigit():
+                print("Ошибка ввода, вы ввели не число\n")
+                user_input = input("Введите число: \n")
             if 0 < int(user_input) < len(self.wiki_api.response_data.keys()):
                 print("Открываем страницу в браузере")
                 webbrowser.open(self.wiki_api.get_result_url(int(user_input)))

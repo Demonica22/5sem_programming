@@ -34,11 +34,12 @@ class WikiApi:
                                   in
                                   enumerate(json_data['query']['search'])}
 
-            return self.response_data
         except Exception as x:
             # Обрабатываем ошибку
             logging.warning(f"Ошибка запроса к wiki: {x}")
-            return {}
+            self.response_data = {}
+
+        return self.response_data
 
     def get_result_url(self, index: int) -> str:
         """
